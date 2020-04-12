@@ -1,5 +1,5 @@
 # rawPy
-Toll to analyze raw data from the biaxial apparatus BRAVA
+Tool to analyze raw data from the biaxial apparatus BRAVA
 Release notes  
 **versio Beta_0_0** 11/04/2020  
 note: the name has been given by my wife Allie (supposed to be a joke for raw pie)  
