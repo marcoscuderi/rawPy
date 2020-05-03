@@ -2,7 +2,7 @@
 Release notes  
 **version Beta_0_0** 11/04/2020  
 note: the name has been given by my wife Allie (supposed to be a joke for raw pie)  
-**version Beta_0_1** 03/05/2020
+**version Beta_0_1** 03/05/2020  
 contributors:  
 - [John Leeman](https://github.com/jrleeman) ([Leeman Geophysical](https://www.leemangeophysical.com/))  
 - [Martijn Van Den Ende](https://github.com/martijnende) (Nice University)  
