@@ -77,7 +77,7 @@ and if you don't find the answer here, internet is a beautiful place to find ans
     - `jupyter labextension install @jupyter-voila/jupyterlab-preview`  
 
 #### Usage
-If everything is installed properly, open an anaconda prompt and navigate to directory where the inversion_master.ipynb is placed. Once there type `voila inversion_mater.ipynb` and a web page should open in you browser where you can use the RSF tool. 
+If everything is installed properly, open an anaconda prompt and navigate to directory where the inversion_rsf_master.ipynb is placed. Once there type `voila inversion_mater.ipynb` and a web page should open in you browser where you can use the RSF tool. 
 If you have any problems:  
 1. Open the notebook and execute the different cells and see what is the error  
 2. Contact me at marco.scuderi@uniroma1.it
