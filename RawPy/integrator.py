@@ -4,7 +4,7 @@ from __future__ import print_function
 import numpy as np
 from scipy.integrate import ode
 
-from pyrsf.friction_rsf import rsf_framework
+from rawPy.friction_rsf import rsf_framework
 
 
 class integrator_class(rsf_framework):
