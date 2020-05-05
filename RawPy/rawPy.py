@@ -287,13 +287,22 @@ def ElasticCorrection(stress,disp,k):
     Return: 
         elestic corrected displacement
     '''
-    ec_disp=np.zeros((len(disp)))
+    from pandas.core.series import Series
+    
+    # Type conversion from Pandas to NumPy
+    if type(stress) == type(Series()):
+        stress = stress.values
+    if type(disp) == type(Series()):
+        disp = disp.values
 
     stiffness = k #[MPa/mm]
-
-    for i in np.arange(1,len(disp)):
-        if i < len(disp):
-            ec_disp[i] = (ec_disp[i-1] + (disp[i]-disp[i-1])) - ((stress[i]-stress[i-1])/stiffness)
+    
+    # Increments in elastic distortion
+    dload = (stress[1:] - stress[:-1]) / stiffness
+    # Increments in total displacement
+    ddisp = disp[1:] - disp[:-1]
+    # Subtract elastic distortion from total displacement
+    ec_disp = np.hstack([0, np.cumsum(ddisp - dload)])
     return ec_disp
 
 
