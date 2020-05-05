@@ -21,7 +21,7 @@ This program has been created to build a tool for reproducible data analysis of 
 It allows to import the raw data and produce an output file with elaborated quantities.  
 It takes inspiration from the program [**xlook**](https://github.com/PennStateRockandSedimentMechanics/xlook) developed by Chris Marone et al. for the Penn State Biax and the module [**biaxtools**](https://github.com/jrleeman/biaxtools) developed by John Leeman.  
 
-### Installation ###
+### Installation ### update the instructions
 In later version I will package everything and allow for installation on a conda channel. FOr now you have to follow these instructions.
 
 - Download [Anaconda](https://www.anaconda.com/distribution/) package manager Python version 3.7
