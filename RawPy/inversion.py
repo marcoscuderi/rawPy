@@ -15,9 +15,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import leastsq, curve_fit
 
-from pyrsf.friction_rsf import rsf_framework
-from pyrsf.integrator import integrator_class
-from pyrsf.bayes import bayes_framework
+from rawPy.friction_rsf import rsf_framework
+from rawPy.integrator import integrator_class
+from rawPY.bayes import bayes_framework
 
 import warnings
 warnings.simplefilter("once", UserWarning)
