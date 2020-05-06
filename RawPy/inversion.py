@@ -17,7 +17,7 @@ from scipy.optimize import leastsq, curve_fit
 
 from rawPy.friction_rsf import rsf_framework
 from rawPy.integrator import integrator_class
-from rawPY.bayes import bayes_framework
+from rawPy.bayes import bayes_framework
 
 import warnings
 warnings.simplefilter("once", UserWarning)
