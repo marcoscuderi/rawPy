@@ -311,6 +311,7 @@ def ElasticCorrection(stress,disp,k):
 
 def shear_strain(ec_disp,lt):
     import numpy as np
+    from pandas.core.series import Series
     '''
     Input:
         vertical ec disp
@@ -318,12 +319,21 @@ def shear_strain(ec_disp,lt):
     Return:
         engineering shear strain
     '''
+    if type(ec_disp) == type(Series()):
+        ec_disp = ec_disp.value
+    if type(lt) == type(Series()):
+        lt = lt.value
+
     strain = np.zeros((len(lt)))
 
     for i in np.arange(1,len(strain)):
         if i < len(strain):
             strain[i] = strain[i-1]+(ec_disp[i]-ec_disp[i-1]) / ((lt[i]+lt[i-1])/2.0)
     return strain
+
+    
+
+
 
 
 def filter_low_pass(x, filt_data, cutoff, fs, order=1, rows=[0,-1]):
@@ -477,6 +487,7 @@ def rslope(x,y,window):
 
 def rgt(disp,lt,L=50):
     import numpy as np 
+    from pandas.core.series import Series
     '''
     This function applies a correction for the geometrical thinning of the sample in double direct shear.
     It is based on the paper Scott et al. 1994 JGR (tringular removal)
@@ -490,6 +501,11 @@ def rgt(disp,lt,L=50):
     
     '''
     ##
+    if type(disp) == type(Series()):
+        disp = disp.value
+    if type(lt) == type(Series()):
+        lt = lt.value
+
     ## triangular model
     rgt = np.zeros((len(lt)))
     rgt[0]=lt[0]
