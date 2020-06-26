@@ -66,6 +66,7 @@ def load_data(filename,pandas=False):
         rec_array = np.rec.array(data,dtype=dtype)
         
         return rec_array
+
 def _binary_tuple_to_string(binary_form):
     binary_form = [c.decode() for c in binary_form]
     return ''.join(binary_form)
@@ -196,7 +197,6 @@ def read_binary(filename, dataendianness='little', pandas=False):
         # Otherwise return the default (Numpy Recarray)
         data_rec = np.rec.array(data, dtype=dtype)
         return data_rec
-
 
 def save_data(exp_name, var, callingLocals=locals()):
     import numpy as np

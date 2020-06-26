@@ -1,4 +1,11 @@
 """
+rawPy is a package intended to facilitate data analysis of experimental data.
+It furnish a variety of functions that allow to elaborate a raw data file. 
+It is also integrated with PyRSF (see below) supported by a GUI to allow for analysis of velocity stepping tests.
+Author: MArco M scuderi
+Co-authors: Martijn Van den Ende and John Leeman
+
+
 PyRSF is a light-weight rate-and-state friction (RSF) modelling package.
 It features:
 
