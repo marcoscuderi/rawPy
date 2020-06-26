@@ -331,10 +331,6 @@ def shear_strain(ec_disp,lt):
             strain[i] = strain[i-1]+(ec_disp[i]-ec_disp[i-1]) / ((lt[i]+lt[i-1])/2.0)
     return strain
 
-    
-
-
-
 
 def filter_low_pass(x, filt_data, cutoff, fs, order=1, rows=[0,-1]):
     """
