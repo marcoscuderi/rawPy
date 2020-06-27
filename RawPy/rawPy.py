@@ -483,7 +483,6 @@ def rslope(x,y,window):
 
 def rgt(disp,lt,L=50):
     import numpy as np 
-    from pandas.core.series import Series
     '''
     This function applies a correction for the geometrical thinning of the sample in double direct shear.
     It is based on the paper Scott et al. 1994 JGR (tringular removal)
@@ -497,10 +496,13 @@ def rgt(disp,lt,L=50):
     
     '''
     ##
+    from pandas.core.series import Series
+    
+    # Type conversion from Pandas to NumPy
     if type(disp) == type(Series()):
-        disp = disp.value
+        disp = disp.values
     if type(lt) == type(Series()):
-        lt = lt.value
+        lt = lt.values
 
     ## triangular model
     rgt = np.zeros((len(lt)))
