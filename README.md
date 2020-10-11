@@ -39,7 +39,7 @@ Open the **Python path manager** and add to the PYTHONPATH the the choosen direc
 - On the left side, open the navigation panel and navigate to the directory where you have saved the file `rawPy_reduction.ipynb`.  
 - Open the `rawPy_reduction.ipynb`. To use the functions provided with this tool you will notice at the beginning the call:  
 ```python 
-from rawPy import rawPy as rp 
+from rawPy.rawPy import rawPy as rp 
 ```
 - To analyze the data follow the instruction given in that notebook.  
 p.s. as a first try please follow the example given with the data provided in the example directory.  
