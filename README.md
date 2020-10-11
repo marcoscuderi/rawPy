@@ -53,7 +53,10 @@ This is a web based GUI (Graphical User Interface) that allow to perform inversi
 
 #### Installation  
 Some steps must be taken to install all the packages that allow to use the tool. I assume that you have installed Anaconda.  
-- First, add to the PYTHONPATH the Py-RSF directory (same procedure as above)
+- Install modules required for the inversion  
+    - If you have not already add the forge channel to the anaconda : `conda config --add channels conda-forge`
+    - install the package `conda install emcee`
+    
 - Install ipywidgets:  
     - Open anaconda prompt (a terminal for mac users) and copy and paste the commands highlighted below
     - install nodejs `conda install nodejs`
