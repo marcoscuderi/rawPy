@@ -62,6 +62,7 @@ Some steps must be taken to install all the packages that allow to use the tool.
     - install nodejs `conda install nodejs`
     - install ipympl `conda install ipympl`
     - install jupyter extensions:
+        - `conda install -c conda-forge ipywidgets`
         - `jupyter labextension install @jupyter-widgets/jupyterlab-manager`
         - `jupyter labextension install jupyter-matplotlib`
         - `jupyter nbextension enable --py widgetsnbextension`  
