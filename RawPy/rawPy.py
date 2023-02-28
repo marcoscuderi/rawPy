@@ -5,6 +5,104 @@ list of all the functions defined so far for analyzing raw data out of the biaxi
 
 ### handling file input / output ###
 
+### handling file input / output ###
+def load_tdms(exp_name):
+    '''
+    This function load into a pd.dataframe the data from the biassiale TDMS file.
+    it prints out all the metadata regarding the experiments.
+    the script should be contained in the same directory as the raw data of the experiment
+    input: 
+        - file name
+    Output:
+        - on screen printed information 
+        - dataframe containing all the data and comments
+    History:
+        - created on 10/28/22
+    '''
+    from nptdms import TdmsFile
+    import numpy as np
+    import pandas as pd
+
+    try:
+        f = open(exp_name, 'rb')
+    except:
+        print(f'Error Opening {exp_name}')
+        return 0
+    
+    tdms_file = TdmsFile('%s'%(exp_name))                          # open the tdms file 
+    metadata, ADC = tdms_file.groups()                             # unpack the groups this is necessary to read the calibration numbers from ADC group
+
+    ###############
+
+    df = tdms_file.as_dataframe()                                  # import tdms into a dataframe
+
+    # extract calibration numbers for each channel
+    names=[]
+    jj=0
+    for i in df.columns:                                           # use dataframe to then get the name of the recorded channels
+        if jj<=1:                                                  # this is to skip the first two columns that are not in the ADC group and are comment_time and comment
+            pass
+            jj+=1
+        else:
+            names.append(i.split('/')[-1][1:-1])                   # creates a list of column names
+
+
+    #######################
+    new_names=[]                                                   # fix the columns names usable as dataframe index (i.e _ and not space)
+    for i in df.columns:
+        new_names.append(i.split('/')[-1][1:-1].replace(' ','_'))
+    df = df.set_axis(new_names, axis='columns')
+
+    ## make changes to channels ## 
+    time_zero = df.Time[0]
+    df.Time = df.Time-df.Time[0]                                   # start time at zero
+
+    df['Rec_n'] = np.arange(0,len(df.Time))                        # create a column for the rec_n
+
+    df['NaN'] = np.NaN
+
+    new_names = new_names + ['Rec_n']                              # add it to the list name to show on plot below 
+    new_names = new_names + ['NaN']                                # add a column of NaN as option for the plotting below 
+
+    df.Comment_Time = df.Comment_Time.astype(float) - time_zero    # correct the cooment time to start at zero time of the exp
+
+    ###############
+    ## use the calibration numbers from the TDMS file to convert volt to engineering units ## 
+
+    for i,j in zip(names,new_names[2:-2]):                              # loop into the two name lists, the new names are indicized to avoid the comments and the last two cols (Rec_n and NaN)
+        kk=0                                                            # a conunter to get only the slope and not the intercept
+        for namew, value in ADC['%s'%i].properties.items():             # extract values for each channel
+            if kk==0:
+                df['%s'%j] = df['%s'%j]*value                           # make the conversion directly within the dataframe
+            kk+=1
+        ### print infos as output ###
+    print('----------------------------')
+    print('--- experimental details ---')
+    print('')
+    for name, value in tdms_file.properties.items():
+        print("{0}: {1}".format(name, value))
+    print('')
+    print('----------------------------')
+    print('')
+    print (df.Comment[0])
+    print('')
+    print('--------Calibrations-----------')
+    print ('')
+    for i in names: # for each channel extract information on slope and intercept
+            for name, value in ADC['%s'%i].properties.items():
+                foo = "{0} = {1}".format(name, value)
+                print(i, foo)
+            print('')
+    print('')
+
+    ### comments ###
+    time_comm_obj, comm = metadata.channels()
+    for i in np.arange(0,len(time_comm_obj)):
+        print('')
+        print('Time: ',float(time_comm_obj[i])-time_zero)
+        print(comm[i])
+    return df
+
 def load_data(filename,pandas=False):
     import numpy as np
     import pandas as pd
