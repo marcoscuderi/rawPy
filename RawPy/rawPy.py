@@ -69,13 +69,14 @@ def load_tdms(exp_name):
     ###############
     ## use the calibration numbers from the TDMS file to convert volt to engineering units ## 
 
+    ###############
+    ## use the calibration numbers from the TDMS file to convert volt to engineering units ## 
+
     for i,j in zip(names,new_names[2:-2]):                              # loop into the two name lists, the new names are indicized to avoid the comments and the last two cols (Rec_n and NaN)
-        kk=0                                                            # a conunter to get only the slope and not the intercept
-        for namew, value in ADC['%s'%i].properties.items():             # extract values for each channel
-            if kk==0:
-                df['%s'%j] = df['%s'%j]*value                           # make the conversion directly within the dataframe
-            kk+=1
-        ### print infos as output ###
+        foo = list(ADC['%s'%i].properties.items())                      # for each channel create a list of slope and intercept in foo
+        df['%s'%j] = df['%s'%j]*foo[0][1]+foo[1][1]                     # use slope and intercept to make the conversion 
+
+    ### print infos as output ###
     print('----------------------------')
     print('--- experimental details ---')
     print('')
