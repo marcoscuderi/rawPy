@@ -18,6 +18,8 @@ def load_tdms(exp_name):
         - dataframe containing all the data and comments
     History:
         - created on 10/28/22
+        - 14/03/2023 implemented the conversion to engineering units using the calibrations in the TDMS
+
     '''
     from nptdms import TdmsFile
     import numpy as np
@@ -29,7 +31,7 @@ def load_tdms(exp_name):
         print(f'Error Opening {exp_name}')
         return 0
     
-    tdms_file = TdmsFile('%s'%(exp_name))                          # open the tdms file 
+    tdms_file = TdmsFile('%s'%(exp_name))             # open the tdms file 
     metadata, ADC = tdms_file.groups()                             # unpack the groups this is necessary to read the calibration numbers from ADC group
 
     ###############
@@ -55,7 +57,7 @@ def load_tdms(exp_name):
 
     ## make changes to channels ## 
     time_zero = df.Time[0]
-    df.Time = df.Time-df.Time[0]                                   # start time at zero
+    df.Time = df.Time-df.Time[0]                                   #start time at zero
 
     df['Rec_n'] = np.arange(0,len(df.Time))                        # create a column for the rec_n
 
@@ -69,24 +71,21 @@ def load_tdms(exp_name):
     ###############
     ## use the calibration numbers from the TDMS file to convert volt to engineering units ## 
 
-    ###############
-    ## use the calibration numbers from the TDMS file to convert volt to engineering units ## 
-
     for i,j in zip(names,new_names[2:-2]):                              # loop into the two name lists, the new names are indicized to avoid the comments and the last two cols (Rec_n and NaN)
         foo = list(ADC['%s'%i].properties.items())                      # for each channel create a list of slope and intercept in foo
         df['%s'%j] = df['%s'%j]*foo[0][1]+foo[1][1]                     # use slope and intercept to make the conversion 
-
-    ### print infos as output ###
+       
+        ### print infos as output ###
     print('----------------------------')
     print('--- experimental details ---')
     print('')
     for name, value in tdms_file.properties.items():
         print("{0}: {1}".format(name, value))
     print('')
-    print('----------------------------')
-    print('')
-    print (df.Comment[0])
-    print('')
+    #print('----------------------------')                              # if needed can make as an optional argument in the funtion call 
+    #print('')
+    #print (df.Comment[0])
+    #print('')
     print('--------Calibrations-----------')
     print ('')
     for i in names: # for each channel extract information on slope and intercept
@@ -96,13 +95,15 @@ def load_tdms(exp_name):
             print('')
     print('')
 
-    ### comments ###
-    time_comm_obj, comm = metadata.channels()
-    for i in np.arange(0,len(time_comm_obj)):
-        print('')
-        print('Time: ',float(time_comm_obj[i])-time_zero)
-        print(comm[i])
+    ### comments ###                                                    # if needed can make as an optional argument in the funtion call
+    #print('---- comments ---')
+    #time_comm_obj, comm = metadata.channels()
+    #for i in np.arange(0,len(time_comm_obj)):
+    #    print('')
+    #    print('Time: ',float(time_comm_obj[i])-time_zero)
+    #    print(comm[i])
     return df
+
 
 def load_data(filename,pandas=False):
     import numpy as np
